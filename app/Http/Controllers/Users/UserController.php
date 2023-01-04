@@ -53,19 +53,38 @@ class UserController extends Controller
         return view('unique-link', compact('request'));
     }
 
-    public function generateLink(Request $request)
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function generateLink(Request $request): mixed
     {
         return $this->userRepository->generateNewLink($request);
     }
-    public function deactivateLink(Request $request)
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function deactivateLink(Request $request): mixed
     {
         return $this->userRepository->deactivateLink($request);
     }
-    public function feelingLucky(Request $request)
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function feelingLucky(Request $request): void
     {
         echo $this->userRepository->feelingLucky($request);
     }
-    public function history(Request $request)
+
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function history(Request $request): View|Factory|Application
     {
         $histories = $this->userRepository->history($request);
         return view('history-result', compact('histories'));
