@@ -2,18 +2,11 @@
 
 namespace App\Services;
 
-use App\Helpers\KeywordProcessingHelper;
 use App\Helpers\UserHelper;
-use App\Models\Orders;
 use App\Models\User;
 use App\Models\UserLink;
 use Exception;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
-use App\Validators\RepositoryValidator;
 use Illuminate\Support\Facades\URL;
-use SM\Backend\KeywordList\Managers\ListManager;
-use SM\Backend\Topics\Managers\BackendManager;
 
 class UserService
 {
