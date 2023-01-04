@@ -25,44 +25,32 @@ class UserHelper
     }
 
     /**
-     * @param $referredDistributors
-     * @param $price
-     * @param $categoryId
-     * @return array|int[]
+     * @return float|int
+     * @throws Exception
      */
-    public function getDistributorPercentage($referredDistributors, $price, $categoryId): array
+    public static function randomNumber(): float|int
     {
-        if($categoryId == 2){
-            return [
-                'percentage' => 0,
-                'commission' => 0
-            ];
+        $winOrLose = random_int(1, 1000);
+        if(($winOrLose % 2) != 0){
+            return 0;
         }
-        $referredDistributors = trim($referredDistributors);
 
-        switch ($referredDistributors){
-            case ($referredDistributors  === 0 ):
-                $percentage = 5;
-                break;
-            case ($referredDistributors  >= 5 && $referredDistributors <= 10 ):
-                $percentage = 10;
-                break;
-            case ($referredDistributors  >= 11 && $referredDistributors <= 20 ):
-                $percentage = 15;
-                break;
-            case ($referredDistributors  >= 21 && $referredDistributors <= 30 ):
-                $percentage = 20;
-                break;
-            case ($referredDistributors > 30):
-                $percentage = 30;
-                break;
-            default:
-                $percentage = 5;
-        };
+        return self::getPercentage($winOrLose);
+    }
 
-        return [
-            'percentage' => $percentage,
-            'commission' =>  round(($percentage  / 100) * $price , 2)
-        ];
+    /**
+     * @param $number
+     * @return float
+     */
+    protected static function getPercentage($number): float
+    {
+        $percentage = match ($number) {
+            $number > 900 => 70,
+            $number >= 600 && $number < 900 => 50,
+            $number >= 300 && $number < 600 => 30,
+            default => 10,
+        };;
+
+        return round(($percentage  / 100) * $number , 2);
     }
 }

@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
-use App\Validators\Request\AllOrderValidator;
-use App\Validators\Request\Autocomplete;
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -66,11 +63,12 @@ class UserController extends Controller
     }
     public function feelingLucky(Request $request)
     {
-
+        echo $this->userRepository->feelingLucky($request);
     }
     public function history(Request $request)
     {
-
+        $histories = $this->userRepository->history($request);
+        return view('history-result', compact('histories'));
     }
 
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('luck_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('score');
+            $table->decimal('score', 10, 2);
             $table->timestamps();
         });
     }

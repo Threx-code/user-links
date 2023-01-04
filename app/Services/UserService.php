@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\UserHelper;
+use App\Models\LuckHistory;
 use App\Models\User;
 use App\Models\UserLink;
 use Exception;
@@ -36,16 +37,18 @@ class UserService
      * @return string
      * @throws Exception
      */
-    protected function linkCreator($user): string
+    protected function linkCreator($userId): string
     {
         $linkGenerated = UserHelper::uniqueLink();
-        if($user){
+        if($userId){
             UserLink::create([
-                'user_id' => $user->id,
+                'user_id' => $userId,
                 'token' => $linkGenerated,
             ]);
+            return URL::temporarySignedRoute('user-page', now()->addDays(7), ['token' => $linkGenerated]);
         }
-        return URL::temporarySignedRoute('user-page', now()->addDays(7), ['token' => $linkGenerated]);
+        return "Sorry invalid data";
+
     }
 
     /**
@@ -56,7 +59,7 @@ class UserService
     public function createUser($request): string
     {
         $user = $this->userCreator($request);
-        return $this->linkCreator($user);
+        return $this->linkCreator($user->id);
     }
 
     /**
@@ -67,17 +70,19 @@ class UserService
     public function generateNewLink($request): string
     {
         $user = $this->getUserId($request);
-        return $this->linkCreator($user);
+        return $this->linkCreator($user->user_id);
     }
 
     /**
      * @param $request
-     * @return void
+     * @return string
      */
-    public function deactivateLink($request): void
-    {$userLink = $this->getUserId($request);
-        $userLink->token_expired = UserHelper::tokenExpireTime();
+    public function deactivateLink($request): string
+    {
+        $userLink = $this->getUserId($request);
+        $userLink->token_expires = UserHelper::tokenExpireTime();
         $userLink->save();
+        return "link deactivated";
     }
 
     public function linkIsValid($request)
@@ -88,10 +93,19 @@ class UserService
 
     public function feelingLucky($request)
     {
+        $score = UserHelper::randomNumber();
+        $user = $this->getUserId($request);
+        LuckHistory::create([
+            'user_id' => $user->user_id,
+            'score' => $score
+        ]);
+        return $score;
     }
 
     public function history($request)
     {
+        $user = $this->getUserId($request);
+        return LuckHistory::where('user_id', $user->user_id)->orderBy('id', 'desc')->get()->take(3);
     }
 
 }
