@@ -20,7 +20,6 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-
     /**
      * @param Request $request
      * @return Application|Factory|View
