@@ -2,8 +2,28 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+use Exception;
+
 class UserHelper
 {
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public static function uniqueLink(): string
+    {
+        return htmlentities(bin2hex(random_bytes(64)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+
+    /**
+     * @return Carbon
+     */
+    public static function tokenExpireTime(): Carbon
+    {
+        return Carbon::now()->days(7);
+    }
+
     /**
      * @param $referredDistributors
      * @param $price

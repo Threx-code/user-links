@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserCreateRequest;
 use App\Validators\Request\AllOrderValidator;
 use App\Validators\Request\Autocomplete;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -14,7 +16,7 @@ use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-    private UserInterface  $userRepository;
+    private UserInterface $userRepository;
 
     public function __construct(UserInterface $userRepository)
     {
@@ -24,44 +26,51 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @return mixed
+     * @return Application|Factory|View
      */
-    public function index(Request $request): mixed
+    public function index(Request $request): View|Factory|Application
     {
         return view('index');
     }
 
     /**
-     * @param Request $request
-     * @return JsonResponse
+     * @param UserCreateRequest $request
+     * @return mixed
      */
-    public function store(UserCreateRequest $request)
+    public function store(UserCreateRequest $request): mixed
     {
-        $allOrder = $this->userRepository->createUser($request);
-        return response()->json();
+        return $this->userRepository->createUser($request);
+
     }
 
     /**
      * @param Request $request
-     * @return Factory|View|Application
+     * @return Application|Factory|View
      */
-    public function getAllOrderView(Request $request): Factory|View|Application
+    public function uniqueLink(Request $request): View|Factory|Application
     {
-        $orders = $this->orderRepository->getAllOrders($request);
-        $data = $orders['data'];
-        $orders = $orders['orders'];
-        return view('orders', compact('orders', 'data'));
+        $linkIsValid = $this->userRepository->linkIsValid($request);
+        if (!$linkIsValid) {
+            return view('link-expired');
+        }
+        return view('unique-link', compact('request'));
     }
 
-
-    /**
-     * @param Request $request
-     * @return Factory|View|Application
-     */
-    public function getTopDistributorsView(Request $request): Factory|View|Application
+    public function generateLink(Request $request)
     {
-        $distributors = $this->userRepository->topDistributors($request);
-        return view('distributors', compact('distributors', ));
+        return $this->userRepository->generateNewLink($request);
+    }
+    public function deactivateLink(Request $request)
+    {
+        return $this->userRepository->deactivateLink($request);
+    }
+    public function feelingLucky(Request $request)
+    {
+
+    }
+    public function history(Request $request)
+    {
+
     }
 
 }

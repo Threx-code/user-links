@@ -63,7 +63,7 @@
                 });
 
                 $.ajax({
-                    url:{{ route('user.store')}},
+                    url:"{{ route('user.store')}}",
                     method:'POST',
                     data:new FormData(this),
                     contentType:false,
@@ -74,6 +74,17 @@
                         $('.result').html(data);
                         if(data == "Profile data uploaded successfully") {
                             $(".addNew_data")[0].reset();
+                        }
+                    },
+                    error:function(xhr){
+                        var data = xhr.responseJSON;
+
+                        if($.isEmptyObject(data.errors) == false){
+                            $.each(data.errors, function(key, result){
+                                $('.result').show();
+                                $(".submitLoader").hide();
+                                $('.result').html(result);
+                            });
                         }
                     }
                 })

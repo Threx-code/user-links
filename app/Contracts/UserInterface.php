@@ -4,7 +4,10 @@ namespace App\Contracts;
 
 interface UserInterface
 {
-    public function getAllOrders($request);
-    public function topDistributors($request);
-    public function autocomplete($request);
+    public function createUser($request);
+    public function generateNewLink($request);
+    public function deactivateLink($request);
+    public function linkIsValid($request);
+    public function feelingLucky($request);
+    public function history($request);
 }

@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_links', function (Blueprint $table) {
+        Schema::create('luck_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('token');
-            $table->timestamp('token_expires')->nullable();
+            $table->unsignedBigInteger('score');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_links');
+        Schema::dropIfExists('luck_histories');
     }
 };

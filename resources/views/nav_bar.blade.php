@@ -2,7 +2,7 @@
     <div class="navbar-collapse nav_content">
 
         <a class="nav-item nav-link navlink active" href="{{url('/')}}">
-            User Profile
+            Unique Link
         </a>
     </div>
 </nav>

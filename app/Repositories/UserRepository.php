@@ -17,27 +17,33 @@ class UserRepository implements UserInterface
        $this->userService = new UserService();
     }
 
-    /**
-     * @param $request
-     * @return array
-     */
-    public function getAllOrders($request): array
+    public function createUser($request)
     {
-        return $this->orderService->getAllOrders($request);
+        return $this->userService->createUser($request);
     }
 
-
-    /**
-     * @param $request
-     * @return mixed
-     */
-    public function topDistributors($request): mixed
+    public function generateNewLink($request)
     {
-        return $this->orderService->topDistributors($request);
+        return $this->userService->generateNewLink($request);
     }
 
-    public function autocomplete($request)
+    public function deactivateLink($request)
     {
-        return $this->orderService->autocomplete($request);
+        return $this->userService->deactivateLink($request);
+    }
+
+    public function linkIsValid($request)
+    {
+        return $this->userService->linkIsValid($request);
+    }
+
+    public function feelingLucky($request)
+    {
+        return $this->userService->feelingLucky($request);
+    }
+
+    public function history($request)
+    {
+        return $this->userService->history($request);
     }
 }
