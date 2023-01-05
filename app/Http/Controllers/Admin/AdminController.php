@@ -23,28 +23,43 @@ class AdminController extends Controller
         return view('index');
     }
 
-    public function allUsers(Request $request)
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function allUsers(Request $request): View|Factory|Application
     {
         $users = $this->adminRepository->allUsers($request);
         return view('all-users', compact('users'));
     }
 
-    public function editUser(Request $request)
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function editUser(Request $request): View|Factory|Application
     {
         $user = $this->adminRepository->getUser($request);
         return view('edit-user', compact('user'));
     }
 
-
-    public function update(UpdateUserRequest $request)
+    /**
+     * @param UpdateUserRequest $request
+     * @return void
+     */
+    public function update(UpdateUserRequest $request): void
     {
-        return $this->adminRepository->editUser($request);
+        echo $this->adminRepository->editUser($request);
 
     }
 
-    public function delete()
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request): void
     {
-
+        echo $this->adminRepository->deleteUser($request);
     }
 
 }

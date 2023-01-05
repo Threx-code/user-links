@@ -29,6 +29,6 @@ Route::middleware([])->group(function(){
     Route::get('admin/all-users', [AdminController::class, 'allUsers'])->name('admin.all-users');
     Route::get('admin/edit-users/{user_id}', [AdminController::class, 'editUser'])->name('admin.edit-users');
     Route::post("admin/edit", [AdminController::class, 'update'])->name('admin.edit');
-    Route::delete('admin/delete', [AdminController::class, 'delete'])->name('admin.delete');
+    Route::post('admin/delete', [AdminController::class, 'delete'])->name('admin.delete');
 }
 );

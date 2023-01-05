@@ -14,21 +14,38 @@ class AdminRepository implements AdminInterface
         $this->adminService = new AdminService();
     }
 
-    public function editUser($request)
+    /**
+     * @param $request
+     * @return string
+     */
+    public function editUser($request): string
     {
         return $this->adminService->editUser($request);
     }
 
-    public function deleteUser($request)
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function deleteUser($request): mixed
     {
         return $this->adminService->deleteUser($request);
     }
 
-    public function allUsers($request)
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function allUsers($request): mixed
     {
         return $this->adminService->allUsers($request);
     }
-    public function getUser($request)
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function getUser($request): mixed
     {
         return $this->adminService->getUser($request);
     }
