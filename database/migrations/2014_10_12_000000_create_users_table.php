@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('phone_number')->unique();
+            $table->timestamp('date_deleted')->nullable();
             $table->timestamps();
         });
     }
