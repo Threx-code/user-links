@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use http\Env\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserCreateRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,10 @@ class UserCreateRequest extends FormRequest
      */
     public function rules()
     {
+        $userId = request()->input('user_id');
         return [
-            'username' => ['required', 'string', Rule::unique('users', 'username')],
-            'phone_number' => ['required', Rule::unique('users', 'phone_number')]
+            'username' => ['nullable', 'string', Rule::unique('users', 'username')->ignore($userId)],
+            'phone_number' => ['nullable', Rule::unique('users', 'phone_number')->ignore($userId)]
         ];
     }
 }

@@ -10,7 +10,7 @@
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-md-7">
-                                    <h1 class="mb-3 text-primary">Create A Profile</h1>
+                                    <h1 class="mb-3 text-primary">Edit User {{$user->username}}</h1>
                                 </div>
                             </div>
                         </div>
@@ -23,17 +23,19 @@
                             <div class="col-lg-8 offset-lg-2 col-md-9 col-sm-12 col-xs-12">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <form method="post" class="addNew_data" action="{{ route('user.store')}}">
+                                        @if(!empty($user))
+                                        <form method="post" class="update_data" action="{{ route('admin.edit')}}">
                                             @csrf
+                                            <input type="hidden" name="user_id"  value="{{$user->id}}">
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Username</label>
-                                                <input type="text" class="form-control" name="username" aria-describedby="usernameHelp">
+                                                <input type="text" class="form-control" name="username" aria-describedby="usernameHelp" value="{{$user->username}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Phone Number</label>
-                                                <input type="text" class="form-control" name="phone_number" aria-describedby="phoneHelp">
+                                                <input type="text" class="form-control" name="phone_number" aria-describedby="phoneHelp" value="{{$user->phone_number}}">
                                             </div>
                                             <div class="form-group mt-4">
                                                 <button type="submit" class="btn btn-primary mb-4">Submit</button>
@@ -41,6 +43,7 @@
                                             <div class="submitLoader searchLoader" style="margin-left: 100px; margin-top: -73px;"></div>
                                             <p class="alert alert-info result" style="margin-left: 0px; margin-top: -3px; display: none;"></p>
                                         </form>
+                                            @endif
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +56,7 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $(".addNew_data").on("submit", (function(e){
+            $(".update_data").on("submit", (function(e){
                 e.preventDefault();
                 $(".submitLoader").show();
                 $.ajaxSetup({
@@ -63,7 +66,7 @@
                 });
 
                 $.ajax({
-                    url:"{{ route('user.store')}}",
+                    url:"{{ route('admin.edit')}}",
                     method:'POST',
                     data:new FormData(this),
                     contentType:false,
@@ -72,9 +75,6 @@
                         $(".submitLoader").hide();
                         $('.result').show();
                         $('.result').html(data);
-                        if(data == "Profile data uploaded successfully") {
-                            $(".addNew_data")[0].reset();
-                        }
                     },
                     error:function(xhr){
                         var data = xhr.responseJSON;

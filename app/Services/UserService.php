@@ -33,7 +33,7 @@ class UserService
     }
 
     /**
-     * @param $user
+     * @param $userId
      * @return string
      * @throws Exception
      */
@@ -85,13 +85,21 @@ class UserService
         return "link deactivated";
     }
 
-    public function linkIsValid($request)
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function linkIsValid($request): mixed
     {
         return UserLink::where('token', $request->token)->whereNull('token_expires')->count();
     }
 
-
-    public function feelingLucky($request)
+    /**
+     * @param $request
+     * @return float|int
+     * @throws Exception
+     */
+    public function feelingLucky($request): float|int
     {
         $score = UserHelper::randomNumber();
         $user = $this->getUserId($request);
@@ -102,7 +110,11 @@ class UserService
         return $score;
     }
 
-    public function history($request)
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function history($request): mixed
     {
         $user = $this->getUserId($request);
         return LuckHistory::where('user_id', $user->user_id)->orderBy('id', 'desc')->get()->take(3);

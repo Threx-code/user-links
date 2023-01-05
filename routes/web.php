@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +25,10 @@ Route::middleware([])->group(function(){
     Route::post('feeling-lucky', [UserController::class, 'feelingLucky'])->name('feeling-lucky');
     Route::post('history', [UserController::class, 'history'])->name('history');
 
-    Route::get('admin', [UserController::class, 'getTopDistributorsView'])->name('admin');
-    Route::put("admin/edit", [UserController::class, 'autocomplete'])->name('admin.edit');
-    Route::post('admin/create', [UserController::class, 'search'])->name('admin.create');
-    Route::delete('admin/delete', [UserController::class, 'search'])->name('admin.delete');
+    Route::get('admin/create-user', [AdminController::class, 'index'])->name('admin.create-user');
+    Route::get('admin/all-users', [AdminController::class, 'allUsers'])->name('admin.all-users');
+    Route::get('admin/edit-users/{user_id}', [AdminController::class, 'editUser'])->name('admin.edit-users');
+    Route::post("admin/edit", [AdminController::class, 'update'])->name('admin.edit');
+    Route::delete('admin/delete', [AdminController::class, 'delete'])->name('admin.delete');
 }
 );
