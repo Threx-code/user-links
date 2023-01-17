@@ -25,9 +25,9 @@ class AdminRepository implements AdminInterface
 
     /**
      * @param $request
-     * @return mixed
+     * @return string
      */
-    public function deleteUser($request): mixed
+    public function deleteUser($request): string
     {
         return $this->adminService->deleteUser($request);
     }

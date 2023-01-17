@@ -5,9 +5,6 @@ namespace App\Repositories;
 use App\Contracts\UserInterface;
 use App\Services\UserService;
 use Exception;
-use \Illuminate\Http\JsonResponse;
-use JsonException;
-
 
 class UserRepository implements UserInterface
 {
