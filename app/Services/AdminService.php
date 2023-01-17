@@ -51,10 +51,10 @@ class AdminService
      */
     public function deleteUser($request): string
     {
-        $userToEdit = $this->getUser($request);
-        if($userToEdit){
-            $userToEdit->date_deleted = Carbon::now();
-            $userToEdit->save();
+        $userToDelete = $this->getUser($request);
+        if($userToDelete){
+            $userToDelete->date_deleted = Carbon::now();
+            $userToDelete->save();
             return  "User deleted";
         }
         return  "User deletion failed";
