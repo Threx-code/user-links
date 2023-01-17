@@ -31,11 +31,7 @@ class UserHelper
     public static function randomNumber(): float|int
     {
         $winOrLose = random_int(1, 1000);
-        if(($winOrLose % 2) != 0){
-            return 0;
-        }
-
-        return self::getPercentage($winOrLose);
+        return (($winOrLose % 2) == 0) ? self::getPercentage($winOrLose) : 0;
     }
 
     /**
