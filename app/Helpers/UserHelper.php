@@ -45,7 +45,7 @@ class UserHelper
             $number >= 600 && $number < 900 => 50,
             $number >= 300 && $number < 600 => 30,
             default => 10,
-        };;
+        };
 
         return round(($percentage  / 100) * $number , 2);
     }
